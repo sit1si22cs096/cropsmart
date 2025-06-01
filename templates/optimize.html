@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CropSmart - Crop Optimization</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            font-weight: 600;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background-color: #28a745;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #218838;
+        }
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+            position: relative;
+        }
+        .form-control {
+            padding-left: 30px;
+        }
+        .form-select {
+            padding-left: 30px;
+            position: relative;
+        }
+        /* Force dropdowns to open downwards */
+        .dropdown-menu {
+            position: absolute !important;
+            transform: none !important;
+            top: 100% !important;
+            left: 0 !important;
+            margin-top: 0.125rem !important;
+        }
+        /* Remove any upward transformation */
+        .bootstrap-select.show-tick .dropdown-menu .selected span.check-mark {
+            transform: none !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-leaf me-2"></i>CropSmart
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/predict">
+                            <i class="fas fa-chart-line me-1"></i>Predict
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/optimize">
+                            <i class="fas fa-sliders-h me-1"></i>Optimize
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="text-center">Crop Optimization</h2>
+        <div class="card">
+            <div class="card-body">
+                <form id="optimizeForm" class="needs-validation" novalidate onsubmit="handleOptimizeFormSubmit(event)">
+                    <div class="mb-3">
+                        <label for="state" class="form-label">Select State</label>
+                        <select id="state" class="form-select" required>
+                            <option value="">Choose...</option>
+                            {% for state in states %}
+                            <option value="{{ state }}">{{ state }}</option>
+                            {% endfor %}
+                        </select>
+                        <i class="fas fa-map-marker-alt position-absolute" style="margin-top: -30px; margin-left: 10px;"></i>
+                    </div>
+                    <div class="mb-3">
+                        <label for="season" class="form-label">Select Season</label>
+                        <select id="season" class="form-select" required>
+                            <option value="">Choose...</option>
+                            {% for season in seasons %}
+                            <option value="{{ season }}">{{ season }}</option>
+                            {% endfor %}
+                        </select>
+                        <i class="fas fa-calendar-alt position-absolute" style="margin-top: -30px; margin-left: 10px;"></i>
+                    </div>
+                    <div class="mb-3">
+                        <label for="crop" class="form-label">Select Crop</label>
+                        <select id="crop" class="form-select" required>
+                            <option value="">Choose...</option>
+                            {% for crop in crops %}
+                            <option value="{{ crop }}">{{ crop }}</option>
+                            {% endfor %}
+                        </select>
+                        <i class="fas fa-seedling position-absolute" style="margin-top: -30px; margin-left: 10px;"></i>
+                    </div>
+                    <div class="mb-3">
+                        <label for="area" class="form-label">Area (in acres)</label>
+                        <input type="number" id="area" class="form-control" required>
+                        <i class="fas fa-arrows-alt-h position-absolute" style="margin-top: -30px; margin-left: 10px;"></i>
+                    </div>
+                    <div class="mb-3">
+                        <label for="rainfall" class="form-label">Rainfall (in mm)</label>
+                        <input type="number" id="rainfall" class="form-control" required>
+                        <i class="fas fa-tint position-absolute" style="margin-top: -30px; margin-left: 10px;"></i>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fertilizer" class="form-label">Fertilizer (in kg)</label>
+                        <input type="number" id="fertilizer" class="form-control" required>
+                        <i class="fas fa-leaf position-absolute" style="margin-top: -30px; margin-left: 10px;"></i>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pesticide" class="form-label">Pesticide (in kg)</label>
+                        <input type="number" id="pesticide" class="form-control" required>
+                        <i class="fas fa-bug position-absolute" style="margin-top: -30px; margin-left: 10px;"></i>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Optimize Yield</button>
+                </form>
+                <div id="results" class="mt-4"></div>
+            </div>
+        </div>
+
+        <div class="toast-container">
+            <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Notification</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body" id="toastBody"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/optimize.js') }}"></script>
+</body>
+</html>

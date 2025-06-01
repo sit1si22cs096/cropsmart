@@ -1,0 +1,14 @@
+Crop	Soil Type	pH Level	Nitrogen	Phosphorus	Potassium	Irrigation Method	Fertilizer Type	Climate Zone	Soil Moisture (%)	Sunlight Exposure (hrs/day)	Temperature (°C)	Humidity (%)	Pest Resistance	Crop Rotation Suitability	Season	Yield (kg/ha)
+Wheat	Loamy	6.5	50	30	40	Drip	Organic	Temperate	45	6	20	50	Medium	Yes	Rabi	3000
+Rice	Clay	6.0	60	20	50	Sprinkler	Chemical	Tropical	55	8	28	75	Low	Yes	Kharif	4500
+Corn	Sandy	6.8	40	25	30	Drip	Organic	Temperate	40	7	22	60	Medium	Yes	Kharif	3500
+Barley	Loamy	6.3	45	35	35	Drip	Chemical	Tropical	42	6.5	24	65	High	No	Rabi	3200
+Soybean	Sandy	6.7	55	30	30	Sprinkler	Organic	Temperate	40	7	25	70	Medium	Yes	Kharif	2800
+Potato	Clay	5.8	70	40	60	Drip	Chemical	Tropical	50	8	18	80	Low	Yes	Zaid	4000
+Maize	Sandy Loam	6.6	48	32	38	Drip	Organic	Subtropical	44	7.5	27	60	Medium	Yes	Kharif	3400
+Millet	Loamy	6.0	50	20	35	Sprinkler	Chemical	Arid	35	9	30	40	High	Yes	Kharif	2500
+Sugarcane	Clay	5.5	90	50	80	Flood	Chemical	Tropical	60	8	28	85	Low	No	Zaid	6000
+Peas	Loamy	6.3	30	15	25	Drip	Organic	Temperate	38	5	15	55	Medium	Yes	Rabi	2000
+Cotton	Sandy Loam	6.5	35	25	45	Sprinkler	Organic	Tropical	40	8	32	45	Medium	Yes	Kharif	2700
+Sorghum	Loamy	6.2	50	28	35	Drip	Chemical	Arid	30	8.5	33	35	High	Yes	Kharif	2900
+Lentil	Clay Loam	6.8	40	20	30	Drip	Organic	Temperate	45	6	22	50	Medium	Yes	Rabi	2100
